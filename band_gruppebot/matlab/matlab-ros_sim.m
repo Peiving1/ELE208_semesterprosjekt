@@ -186,8 +186,6 @@ q_hover = korriger_for_dh(ik_ned(p_plukk + [0; 0; h_over], psi));
 n5 = round((q_hover(5) - q0(5)) / (2*pi));   % hvor mange hele runder for langt
 q_hover(5) = q_hover(5) - n5*2*pi;           % samme orientering, korteste vei
 
-tA = linspace(0, T_flytt, 30)';
-[QA, QdA] = jtraj(q0, q_hover, tA);
 
 % B: plukk opp boksen i fart, (kartesisk, 1.5sek)
 h = [tpoly(h_over, klaring, round(t_ned/dt)); klaring * ones(round(t_hold/dt), 1); tpoly(klaring, h_loft, round(t_loft/dt))];
@@ -201,6 +199,9 @@ end
 [~, QdB] = gradient(QB, dt);                      % Leddfart langs tidsretningen
 QB(:,5) = QB(:,5) - n5*2*pi;                 % samme forskyvning for hele B
 
+% Beregner A etter B slik at armen vil slutte i A med samme startfart som B
+tA = linspace(0, T_flytt, 30)';
+[QA, QdA] = jtraj(q0, q_hover, tA, zeros(1,5), QdB(1,;));
 
 % Finner ønsket pos. til boksene 
 plass = [plasser(boks); y_bord];        % Velg plass (1, 2 eller 3)
