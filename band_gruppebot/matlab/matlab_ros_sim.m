@@ -201,12 +201,12 @@ QB(:,5) = QB(:,5) - n5*2*pi;                 % samme forskyvning for hele B
 
 % Beregner A etter B slik at armen vil slutte i A med samme startfart som B
 tA = linspace(0, T_flytt, 30)';
-[QA, QdA] = jtraj(q0, q_hover, tA, zeros(1,5), QdB(1,;));
+[QA, QdA] = jtraj(q0, q_hover, tA, zeros(1,5), QdB(1,:));
 
 % Finner ønsket pos. til boksene 
-plass = [plasser(boks); y_bord];        % Velg plass (1, 2 eller 3)
+plass = [plasser(boks); y_bord];        
 
-% Korrigerer for høyde over bordet hvis den skal stable
+% Korrigerer for høyde over bordet når den skal stable
 if boks <= 3
     z_ned = z_bord + eske_h + klaring + klaring_bord;                    % Bord + eskehøyde + 5 mm for sugekoppene + 3 mm  klaring
 else
