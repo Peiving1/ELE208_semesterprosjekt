@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+  ros2_control for band_gruppebot.
+
+  sim_gazebo = true  : leddene styres i Gazebo (gz_ros2_control)
+  sim_gazebo = false : "liksom-hardware" (mock_components), for test uten Gazebo
+
+  Hvert ledd har fart som kommando, og posisjon/fart/moment som tilstand.
+  Posisjonsreguleringen gjøres av arm_controller (config/ros2_controllers.yaml):
+      fart_kommando = q_ref_derivert + Kp * (q_ref - q)
+  Det er samme oppbygging som posisjonsregulatoren i Krav 4 (P-regulator med
+  hastighets-foroverkobling utenpå en indre hastighetssløyfe, Corke kap. 9.1.7).
+  Den indre hastighetssløyfa er leddmotoren i Gazebo.
+  q1..q5 er startstillingen [rad].
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="band_gruppebot_ledd" params="navn start">
+    <joint name="${navn}">
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">${start}</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="band_gruppebot_ros2_control" params="prefix sim_gazebo q1 q2 q3 q4 q5">
+    <ros2_control name="${prefix}band_gruppebot_system" type="system">
+      <hardware>
+        <xacro:if value="${sim_gazebo}">
+          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        </xacro:if>
+        <xacro:unless value="${sim_gazebo}">
+          <plugin>mock_components/GenericSystem</plugin>
+        </xacro:unless>
+      </hardware>
+      <xacro:band_gruppebot_ledd navn="${prefix}Revolute_1" start="${q1}"/>
+      <xacro:band_gruppebot_ledd navn="${prefix}Revolute_2" start="${q2}"/>
+      <xacro:band_gruppebot_ledd navn="${prefix}Revolute_3" start="${q3}"/>
+      <xacro:band_gruppebot_ledd navn="${prefix}Revolute_4" start="${q4}"/>
+      <xacro:band_gruppebot_ledd navn="${prefix}Revolute_5" start="${q5}"/>
+    </ros2_control>
+  </xacro:macro>
+
+</robot>

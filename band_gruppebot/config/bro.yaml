@@ -1,0 +1,156 @@
+# Bro mellom Gazebo og ROS 2 (ros_gz_bridge), brukt av launch/gazebo.launch.py
+#
+#   GZ_TO_ROS: Gazebo -> ROS 2      ROS_TO_GZ: ROS 2 -> Gazebo
+
+# Simulert tid (alle noder kjører med use_sim_time)
+- ros_topic_name: "/clock"
+  gz_topic_name: "/clock"
+  ros_type_name: "rosgraph_msgs/msg/Clock"
+  gz_type_name: "gz.msgs.Clock"
+  direction: GZ_TO_ROS
+
+# Fart på samlebåndet [m/s]
+- ros_topic_name: "/samleband/fart"
+  gz_topic_name: "/model/samleband/link/belte/track_cmd_vel"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# Kamerabilde (bare når kamera:=true)
+- ros_topic_name: "/kamera/image"
+  gz_topic_name: "/kamera/image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+  direction: GZ_TO_ROS
+
+# --- eske1: posisjon (fasit), og vakuum (fest / slipp / status) ---
+- ros_topic_name: "/model/eske1/pose"
+  gz_topic_name: "/model/eske1/pose"
+  ros_type_name: "geometry_msgs/msg/PoseStamped"
+  gz_type_name: "gz.msgs.Pose"
+  direction: GZ_TO_ROS
+- ros_topic_name: "/model/eske1/detachable_joint/attach"
+  gz_topic_name: "/model/eske1/detachable_joint/attach"
+  ros_type_name: "std_msgs/msg/Empty"
+  gz_type_name: "gz.msgs.Empty"
+  direction: ROS_TO_GZ
+- ros_topic_name: "/model/eske1/detachable_joint/detach"
+  gz_topic_name: "/model/eske1/detachable_joint/detach"
+  ros_type_name: "std_msgs/msg/Empty"
+  gz_type_name: "gz.msgs.Empty"
+  direction: ROS_TO_GZ
+- ros_topic_name: "/model/eske1/detachable_joint/state"
+  gz_topic_name: "/model/eske1/detachable_joint/state"
+  ros_type_name: "std_msgs/msg/String"
+  gz_type_name: "gz.msgs.StringMsg"
+  direction: GZ_TO_ROS
+
+# --- eske2: posisjon (fasit), og vakuum (fest / slipp / status) ---
+- ros_topic_name: "/model/eske2/pose"
+  gz_topic_name: "/model/eske2/pose"
+  ros_type_name: "geometry_msgs/msg/PoseStamped"
+  gz_type_name: "gz.msgs.Pose"
+  direction: GZ_TO_ROS
+- ros_topic_name: "/model/eske2/detachable_joint/attach"
+  gz_topic_name: "/model/eske2/detachable_joint/attach"
+  ros_type_name: "std_msgs/msg/Empty"
+  gz_type_name: "gz.msgs.Empty"
+  direction: ROS_TO_GZ
+- ros_topic_name: "/model/eske2/detachable_joint/detach"
+  gz_topic_name: "/model/eske2/detachable_joint/detach"
+  ros_type_name: "std_msgs/msg/Empty"
+  gz_type_name: "gz.msgs.Empty"
+  direction: ROS_TO_GZ
+- ros_topic_name: "/model/eske2/detachable_joint/state"
+  gz_topic_name: "/model/eske2/detachable_joint/state"
+  ros_type_name: "std_msgs/msg/String"
+  gz_type_name: "gz.msgs.StringMsg"
+  direction: GZ_TO_ROS
+
+# --- eske3: posisjon (fasit), og vakuum (fest / slipp / status) ---
+- ros_topic_name: "/model/eske3/pose"
+  gz_topic_name: "/model/eske3/pose"
+  ros_type_name: "geometry_msgs/msg/PoseStamped"
+  gz_type_name: "gz.msgs.Pose"
+  direction: GZ_TO_ROS
+- ros_topic_name: "/model/eske3/detachable_joint/attach"
+  gz_topic_name: "/model/eske3/detachable_joint/attach"
+  ros_type_name: "std_msgs/msg/Empty"
+  gz_type_name: "gz.msgs.Empty"
+  direction: ROS_TO_GZ
+- ros_topic_name: "/model/eske3/detachable_joint/detach"
+  gz_topic_name: "/model/eske3/detachable_joint/detach"
+  ros_type_name: "std_msgs/msg/Empty"
+  gz_type_name: "gz.msgs.Empty"
+  direction: ROS_TO_GZ
+- ros_topic_name: "/model/eske3/detachable_joint/state"
+  gz_topic_name: "/model/eske3/detachable_joint/state"
+  ros_type_name: "std_msgs/msg/String"
+  gz_type_name: "gz.msgs.StringMsg"
+  direction: GZ_TO_ROS
+
+# --- eske4: posisjon (fasit), og vakuum (fest / slipp / status) ---
+- ros_topic_name: "/model/eske4/pose"
+  gz_topic_name: "/model/eske4/pose"
+  ros_type_name: "geometry_msgs/msg/PoseStamped"
+  gz_type_name: "gz.msgs.Pose"
+  direction: GZ_TO_ROS
+- ros_topic_name: "/model/eske4/detachable_joint/attach"
+  gz_topic_name: "/model/eske4/detachable_joint/attach"
+  ros_type_name: "std_msgs/msg/Empty"
+  gz_type_name: "gz.msgs.Empty"
+  direction: ROS_TO_GZ
+- ros_topic_name: "/model/eske4/detachable_joint/detach"
+  gz_topic_name: "/model/eske4/detachable_joint/detach"
+  ros_type_name: "std_msgs/msg/Empty"
+  gz_type_name: "gz.msgs.Empty"
+  direction: ROS_TO_GZ
+- ros_topic_name: "/model/eske4/detachable_joint/state"
+  gz_topic_name: "/model/eske4/detachable_joint/state"
+  ros_type_name: "std_msgs/msg/String"
+  gz_type_name: "gz.msgs.StringMsg"
+  direction: GZ_TO_ROS
+
+# --- eske5: posisjon (fasit), og vakuum (fest / slipp / status) ---
+- ros_topic_name: "/model/eske5/pose"
+  gz_topic_name: "/model/eske5/pose"
+  ros_type_name: "geometry_msgs/msg/PoseStamped"
+  gz_type_name: "gz.msgs.Pose"
+  direction: GZ_TO_ROS
+- ros_topic_name: "/model/eske5/detachable_joint/attach"
+  gz_topic_name: "/model/eske5/detachable_joint/attach"
+  ros_type_name: "std_msgs/msg/Empty"
+  gz_type_name: "gz.msgs.Empty"
+  direction: ROS_TO_GZ
+- ros_topic_name: "/model/eske5/detachable_joint/detach"
+  gz_topic_name: "/model/eske5/detachable_joint/detach"
+  ros_type_name: "std_msgs/msg/Empty"
+  gz_type_name: "gz.msgs.Empty"
+  direction: ROS_TO_GZ
+- ros_topic_name: "/model/eske5/detachable_joint/state"
+  gz_topic_name: "/model/eske5/detachable_joint/state"
+  ros_type_name: "std_msgs/msg/String"
+  gz_type_name: "gz.msgs.StringMsg"
+  direction: GZ_TO_ROS
+
+# --- eske6: posisjon (fasit), og vakuum (fest / slipp / status) ---
+- ros_topic_name: "/model/eske6/pose"
+  gz_topic_name: "/model/eske6/pose"
+  ros_type_name: "geometry_msgs/msg/PoseStamped"
+  gz_type_name: "gz.msgs.Pose"
+  direction: GZ_TO_ROS
+- ros_topic_name: "/model/eske6/detachable_joint/attach"
+  gz_topic_name: "/model/eske6/detachable_joint/attach"
+  ros_type_name: "std_msgs/msg/Empty"
+  gz_type_name: "gz.msgs.Empty"
+  direction: ROS_TO_GZ
+- ros_topic_name: "/model/eske6/detachable_joint/detach"
+  gz_topic_name: "/model/eske6/detachable_joint/detach"
+  ros_type_name: "std_msgs/msg/Empty"
+  gz_type_name: "gz.msgs.Empty"
+  direction: ROS_TO_GZ
+- ros_topic_name: "/model/eske6/detachable_joint/state"
+  gz_topic_name: "/model/eske6/detachable_joint/state"
+  ros_type_name: "std_msgs/msg/String"
+  gz_type_name: "gz.msgs.StringMsg"
+  direction: GZ_TO_ROS

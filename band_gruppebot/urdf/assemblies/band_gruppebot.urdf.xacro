@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="band_gruppebot_macro">
+
+  <!--
+    Endret for Gazebo (se README.md, "Hvis dere eksporterer fra Fusion på nytt"):
+      - effort/velocity i <limit> er økt (var 100 Nm og 1 rad/s på alle ledd).
+        Fartsgrensen er satt høyt (10 rad/s) med vilje: når et ledd når fartsgrensen i
+        Gazebo, slutter motoren å virke og leddet blir stående og spinne. Banene vi
+        sender ligger langt under (ca. 2 rad/s).
+      - tcp_link er flyttet til urdf/band_gruppebot.urdf.xacro
+      - ros2_control er flyttet til urdf/band_gruppebot.ros2_control.xacro
+  -->
+  <xacro:macro name="band_gruppebot" params="prefix">
+
+    <!-- Links -->
+    <link name="${prefix}base_link">
+      <inertial>
+        <origin xyz="0.000000 0.000000 0.009985" rpy="0 0 0"/>
+        <mass value="6.267669"/>
+        <inertia ixx="2.114164e-02" ixy="0.000000e+00" ixz="0.000000e+00"
+                 iyy="2.114164e-02" iyz="0.000000e+00" izz="4.186605e-02"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 0.000000 0.000000"/>
+        <geometry>
+          <mesh filename="package://band_gruppebot/meshes/band_gruppebot/base_link.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Steel"/>
+      </visual>
+      <collision>
+        <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 0.000000 0.000000"/>
+        <geometry>
+          <mesh filename="package://band_gruppebot/meshes/band_gruppebot/base_link_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}shoulder_link">
+      <inertial>
+        <origin xyz="-0.000000 0.033386 0.315321" rpy="0 0 0"/>
+        <mass value="3.344565"/>
+        <inertia ixx="3.043471e-02" ixy="-8.567490e-10" ixz="3.745206e-09"
+                 iyy="3.105513e-02" iyz="-3.633313e-03" izz="8.309956e-03"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.000000 0.000000 0.005000" rpy="0.000000 0.000000 0.000000"/>
+        <geometry>
+          <mesh filename="package://band_gruppebot/meshes/band_gruppebot/shoulder_link.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Aluminum"/>
+      </visual>
+      <collision>
+        <origin xyz="0.000000 0.000000 0.005000" rpy="0.000000 0.000000 0.000000"/>
+        <geometry>
+          <mesh filename="package://band_gruppebot/meshes/band_gruppebot/shoulder_link_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}link1">
+      <inertial>
+        <origin xyz="0.408620 0.000000 0.025613" rpy="0 0 0"/>
+        <mass value="3.873242"/>
+        <inertia ixx="6.431192e-03" ixy="0.000000e+00" ixz="2.503152e-04"
+                 iyy="6.715709e-01" iyz="0.000000e+00" izz="6.725922e-01"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.000000 0.000000 0.005016" rpy="0.000000 1.570796 0.000000"/>
+        <geometry>
+          <mesh filename="package://band_gruppebot/meshes/band_gruppebot/link1.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Aluminum"/>
+      </visual>
+      <collision>
+        <origin xyz="0.000000 0.000000 0.005016" rpy="0.000000 1.570796 0.000000"/>
+        <geometry>
+          <mesh filename="package://band_gruppebot/meshes/band_gruppebot/link1_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}link2">
+      <inertial>
+        <origin xyz="0.309362 0.000000 -0.021661" rpy="0 0 0"/>
+        <mass value="2.256077"/>
+        <inertia ixx="2.691771e-03" ixy="0.000000e+00" ixz="-9.486061e-05"
+                 iyy="2.320565e-01" iyz="0.000000e+00" izz="2.324156e-01"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.000000 0.000000 -0.005016" rpy="-3.141593 -1.570796 0.000000"/>
+        <geometry>
+          <mesh filename="package://band_gruppebot/meshes/band_gruppebot/link2.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Aluminum"/>
+      </visual>
+      <collision>
+        <origin xyz="0.000000 0.000000 -0.005016" rpy="-3.141593 -1.570796 0.000000"/>
+        <geometry>
+          <mesh filename="package://band_gruppebot/meshes/band_gruppebot/link2_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}link3">
+      <inertial>
+        <origin xyz="-0.000000 -0.034255 0.018632" rpy="0 0 0"/>
+        <mass value="0.818636"/>
+        <inertia ixx="2.587701e-03" ixy="0.000000e+00" ixz="0.000000e+00"
+                 iyy="5.226183e-04" iyz="-2.341627e-04" izz="2.718987e-03"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.000000 0.000000 0.005016" rpy="1.570796 -1.570796 0.000000"/>
+        <geometry>
+          <mesh filename="package://band_gruppebot/meshes/band_gruppebot/link3.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Aluminum"/>
+      </visual>
+      <collision>
+        <origin xyz="0.000000 0.000000 0.005016" rpy="1.570796 -1.570796 0.000000"/>
+        <geometry>
+          <mesh filename="package://band_gruppebot/meshes/band_gruppebot/link3_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}gripper">
+      <inertial>
+        <origin xyz="0.119141 0.000000 0.018417" rpy="0 0 0"/>
+        <mass value="0.090864"/>
+        <inertia ixx="4.767636e-05" ixy="0.000000e+00" ixz="-2.251846e-05"
+                 iyy="3.554728e-04" iyz="0.000000e+00" izz="3.914721e-04"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.000000 0.000000 0.006000" rpy="0.000000 0.000000 -1.570796"/>
+        <geometry>
+          <mesh filename="package://band_gruppebot/meshes/band_gruppebot/gripper.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Aluminum"/>
+      </visual>
+      <collision>
+        <origin xyz="0.000000 0.000000 0.006000" rpy="0.000000 0.000000 -1.570796"/>
+        <geometry>
+          <mesh filename="package://band_gruppebot/meshes/band_gruppebot/gripper_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+    <!-- Joints (internal to assembly) -->
+    <joint name="${prefix}Revolute_1" type="continuous">
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}shoulder_link"/>
+      <origin xyz="0.000000 0.000000 0.015000" rpy="0.000000 0.000000 0.000000"/>
+      <axis xyz="0.000000 0.000000 1.000000"/>
+      <limit effort="300.0" velocity="10.0"/>
+    </joint>
+
+    <joint name="${prefix}Revolute_2" type="continuous">
+      <parent link="${prefix}shoulder_link"/>
+      <child link="${prefix}link1"/>
+      <origin xyz="0.000000 0.005000 0.355000" rpy="1.570796 0.000000 0.000000"/>
+      <axis xyz="0.000000 0.000000 1.000000"/>
+      <limit effort="500.0" velocity="10.0"/>
+    </joint>
+
+    <joint name="${prefix}Revolute_3" type="continuous">
+      <parent link="${prefix}link1"/>
+      <child link="${prefix}link2"/>
+      <origin xyz="0.920000 0.000000 0.010016" rpy="0.000000 0.000000 0.000000"/>
+      <axis xyz="0.000000 0.000000 1.000000"/>
+      <limit effort="300.0" velocity="10.0"/>
+    </joint>
+
+    <joint name="${prefix}Revolute_4" type="continuous">
+      <parent link="${prefix}link2"/>
+      <child link="${prefix}link3"/>
+      <origin xyz="0.720000 0.000000 -0.010016" rpy="0.000000 0.000000 0.000000"/>
+      <axis xyz="0.000000 0.000000 1.000000"/>
+      <limit effort="100.0" velocity="10.0"/>
+    </joint>
+
+    <joint name="${prefix}Revolute_5" type="continuous">
+      <parent link="${prefix}link3"/>
+      <child link="${prefix}gripper"/>
+      <origin xyz="0.000000 -0.155000 0.005016" rpy="1.570796 0.000000 0.000000"/>
+      <axis xyz="0.000000 0.000000 1.000000"/>
+      <limit effort="50.0" velocity="10.0"/>
+    </joint>
+
+  </xacro:macro>
+
+</robot>

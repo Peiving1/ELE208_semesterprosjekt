@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!--
+  Eske som kommer på samlebåndet: 0,30 x 0,20 x 0,10 m, 5 kg (maks objektmasse i kravet).
+  Den mørke stripa på toppen viser lengderetningen, så rotasjonen er lett å se.
+
+  Brukes av launch/gazebo.launch.py:  xacro eske.sdf.xacro navn:=eske1 farge:="0.80 0.55 0.25"
+
+  Plugin:
+    - PosePublisher: publiserer eskas posisjon på /model/<navn>/pose. Dette er "fasiten" som
+                     scripts/celle.py lager kameramålinger av.
+  Vakuumet (DetachableJoint) ligger i robotens URDF, fordi det er griperen som holder eska.
+-->
+<sdf version="1.9" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="navn" default="eske1"/>
+  <xacro:arg name="farge" default="0.80 0.55 0.25"/>
+  <xacro:property name="L" value="0.30"/>
+  <xacro:property name="B" value="0.20"/>
+  <xacro:property name="Hh" value="0.10"/>
+  <xacro:property name="m" value="5.0"/>
+
+  <model name="$(arg navn)">
+    <!-- Lenka må ha et navn som ingen andre esker har. Når vakuumet fester eska, flytter
+         fysikkmotoren (DART) lenka inn i roboten, og to lenker med samme navn skaper rot. -->
+    <link name="$(arg navn)_lenke">
+      <inertial>
+        <mass>${m}</mass>
+        <inertia>
+          <ixx>${m*(B*B+Hh*Hh)/12}</ixx>
+          <iyy>${m*(L*L+Hh*Hh)/12}</iyy>
+          <izz>${m*(L*L+B*B)/12}</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <collision name="$(arg navn)_kollisjon">
+        <geometry>
+          <box>
+            <size>${L} ${B} ${Hh}</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="$(arg navn)_eske">
+        <geometry>
+          <box>
+            <size>${L} ${B} ${Hh}</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>$(arg farge) 1</ambient>
+          <diffuse>$(arg farge) 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+        </material>
+      </visual>
+      <visual name="$(arg navn)_stripe">
+        <pose>0 0 ${Hh/2} 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>${L} 0.03 0.002</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.15 0.10 0.05 1</ambient>
+          <diffuse>0.15 0.10 0.05 1</diffuse>
+        </material>
+      </visual>
+    </link>
+
+    <plugin filename="gz-sim-pose-publisher-system" name="gz::sim::systems::PosePublisher">
+      <publish_model_pose>true</publish_model_pose>
+      <publish_link_pose>false</publish_link_pose>
+      <publish_nested_model_pose>false</publish_nested_model_pose>
+      <use_pose_vector_msg>false</use_pose_vector_msg>
+      <update_frequency>50</update_frequency>
+    </plugin>
+  </model>
+</sdf>
