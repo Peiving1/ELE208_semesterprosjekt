@@ -2,13 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="band_gruppebot_macro">
 
   <!--
-    Endret for Gazebo (se README.md, "Hvis dere eksporterer fra Fusion på nytt"):
-      - effort/velocity i <limit> er økt (var 100 Nm og 1 rad/s på alle ledd).
-        Fartsgrensen er satt høyt (10 rad/s) med vilje: når et ledd når fartsgrensen i
-        Gazebo, slutter motoren å virke og leddet blir stående og spinne. Banene vi
-        sender ligger langt under (ca. 2 rad/s).
-      - tcp_link er flyttet til urdf/band_gruppebot.urdf.xacro
-      - ros2_control er flyttet til urdf/band_gruppebot.ros2_control.xacro
+      kommenter her om bruk av ai
   -->
   <xacro:macro name="band_gruppebot" params="prefix">
 

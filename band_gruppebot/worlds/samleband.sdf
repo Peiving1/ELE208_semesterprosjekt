@@ -222,9 +222,7 @@
     <!-- ===================== Samlebånd ===================== -->
     <!-- Modellen er rotert 90 grader, så båndets +x (fartsretningen) er +y i verden.
          TrackController gir kontaktflaten en fart, slik at alt som ligger på båndet
-         blir med (samme oppsett som conveyor.sdf i Gazebo-eksemplene).
-         Fart: gz.msgs.Double på /model/samleband/link/belte/track_cmd_vel
-               (fra ROS: std_msgs/Float64 på /samleband/fart). -->
+         blir med -->
     <model name="samleband">
       <static>1</static>
       <pose>1.0 -1.5 0.27 0 0 1.570796327</pose>

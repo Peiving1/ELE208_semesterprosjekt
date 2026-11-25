@@ -3,8 +3,6 @@
 #   /joint_states                      <- joint_state_broadcaster
 #   /arm_controller/joint_trajectory   -> arm_controller (trajectory_msgs/JointTrajectory)
 #
-# Rettet: listen med ledd manglet mellomrom etter bindestreken ("-Revolute_1"),
-# så YAML leste alle fem leddene som én tekst og arm_controller kunne ikke starte.
 controller_manager:
   ros__parameters:
     update_rate: 250  # Hz (Gazebo regner med 500 Hz, se worlds/samleband.sdf)

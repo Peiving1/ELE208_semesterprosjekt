@@ -15,7 +15,7 @@
     6. ros2_control + Gazebo-plugin (bare når sim_gazebo:=true)
 
   Argumenter:
-    prefix:=...           prefiks på ledd/lenker (som før)
+    prefix:=...           prefiks på ledd/lenker
     sim_gazebo:=true      bruk Gazebo som "hardware" (ellers mock_components)
     kamera_sensor:=true   la Gazebo rendre kamerabilde (krever GPU/OpenGL)
     antall_esker:=6       antall esker (eske1, eske2, ...) som vakuumet kan holde
@@ -188,42 +188,28 @@
     <axis xyz="0.000000 0.000000 1.000000"/>
     <limit effort="50.0" velocity="10.0"/>
   </joint>
-  <!-- ===================== Feste til verden ===================== -->
-  <!-- Uten dette er fotplata (6 kg) løs, og armen på 1,8 m velter i Gazebo. -->
+
   <link name="world"/>
   <joint name="world_fixed" type="fixed">
     <parent link="world"/>
     <child link="base_link"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
   </joint>
-  <!-- ===================== DH-basis {0} ===================== -->
-  <!-- Robotens basisramme, den samme som DH-tabellen og MATLAB-koden bruker (d1 = 0,35).
-       Den ligger oppå fotplata, som er 0,02 m tykk: p(world) = p({0}) + [0 0 0.02].
-       Sjekk mot fkine i MATLAB: ros2 run tf2_ros tf2_echo dh_base tcp_link -->
+
   <link name="dh_base"/>
   <joint name="base_to_dh_base" type="fixed">
     <parent link="base_link"/>
     <child link="dh_base"/>
     <origin rpy="0 0 0" xyz="0 0 0.02"/>
   </joint>
-  <!-- ===================== Verktøypunkt (TCP) ===================== -->
-  <!-- Samme punkt som robot.tool = transl(0.17, 0, 0.03) i MATLAB.
-       z er 0,035 her fordi gripper-ramma ligger 5 mm inne i link3 (leddet er 0,155 i
-       Fusion, d5 = 0,16 i DH). 0,155 + 0,035 = 0,16 + 0,03 = 0,19 m under håndleddet,
-       som også er undersiden av sugekoppene i 3D-modellen. -->
+
   <link name="tcp_link"/>
   <joint name="gripper_to_tcp" type="fixed">
     <parent link="gripper"/>
     <child link="tcp_link"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.17 0.0 0.035"/>
   </joint>
-  <!-- ===================== Kamera (RealSense D455, forenklet) ===================== -->
-  <!-- Henger fast i (1.0, -1.0, 1.5) i robotens basisramme {0} og ser rett ned på båndet,
-       1 m oppstrøms for roboten.
-       kamera_link:   x peker ut av linsa (ned). Dette er ramma Gazebo-kameraet bruker.
-       kamera_optisk: samme ramme som T_C = transl(1, -1, 1.5) * trotx(pi) i MATLAB
-                      (x som {0}, y motsatt, z ned). Målingene publiseres i denne.
-       Sjekk: ros2 run tf2_ros tf2_echo dh_base kamera_optisk -->
+  
   <link name="kamera_link">
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0"/>
