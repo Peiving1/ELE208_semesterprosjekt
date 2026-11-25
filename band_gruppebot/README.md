@@ -109,7 +109,7 @@ fart = q_ref_derivert + Kp·(q_ref − q),   Kp = 25 1/s
 | `launch/gazebo.launch.py` | Hele simuleringen |
 | `launch/display.launch.py` | RViz med glidebrytere |
 | `scripts/celle.py` | Bånd, kamera og vakuum |
-| `matlab/gazebo_styring.m` | Styring fra MATLAB (krav 5.iii) |
+| `matlab/kobling_final.m` | Styring fra MATLAB (krav 5.iii) |
 | `robot_data.yaml` | Data fra Fusion-eksporten |
 
 ## 8. Robotdata (fra Fusion-eksporten)
