@@ -35,7 +35,6 @@
 
 %% Roboten og felles oppsett
 % [Egen analyse, skrevet om med KI] Felles oppsett, samme som i Krav3.
-% clear         % ellers viser MATLAB en gammel variabel Gruppebot i stedet for å kjøre fila
 close all
 Gruppebot     % DH-tabell og tool fra robot-fila (L1, L2, L3, d1 og Gruppebot)
 
