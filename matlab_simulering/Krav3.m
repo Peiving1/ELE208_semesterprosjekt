@@ -19,7 +19,7 @@ dt      = 0.02;                          % tidssteg [s]
 ws      = [-0.6 1.6 -1.6 1.6 0 1.8];     % plotteområde [m]
 vis     = [120 25];                      % synsvinkel [az el]
 
-% [KI] Kameraet T_C og omregning fra {C} til basen (erstattet vår p_maalt = p_ekte + feil)
+% [KI-endret] Kameraet T_C og omregning fra {C} til basen (erstattet vår p_maalt = p_ekte + feil)
 % Kameraet henger 1.5 m over basen, 1 m oppstrøms, og ser rett ned (Rx(pi) snur z ned)
 T_C       = SE3(1.0, -1.0, 1.5) * SE3.Rx(pi);   % {C} sett fra {0}
 p_C       = (T_C.inv * p_ekte')'                 % eska sett fra kameraet (fasit) %[output:6fa30809]
@@ -73,6 +73,7 @@ fprintf('Høyeste plukk:   ønsket [1.00 0.00 1.00], fkine gir [%.2f %.2f %.2f]\
 fprintf('Lengst ut 1.2 m: ønsket [0.00 1.20 0.40], fkine gir [%.2f %.2f %.2f]\n', Gruppebot.fkine(q_langt).t); %[output:9614a93f]
 %%
 %[text] ## Banen
+% [KI-endret]
 % 1) jtraj fra venteposisjonen til 0.1 m over der eska er om t1 = 3 s.
 %    Slutter med båndfarten, så griperen kan følge båndet videre.
 t1  = 3;
@@ -174,6 +175,7 @@ end %[output:group:769c350f]
 close(vid)
 %%
 %[text] ## Plott
+%[KI-endret]
 figure %[output:845f0c65]
 subplot(2,1,1) %[output:845f0c65]
 plot(t, P(:,2), 'LineWidth', 1.5), hold on %[output:845f0c65]
